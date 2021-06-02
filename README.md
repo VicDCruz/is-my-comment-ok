@@ -35,3 +35,5 @@ For the moment I'm writing this down, I am not having any difficulties, because 
 
 # How to use this project
 
+# References
+- [How to Write a Good README File for Your GitHub Project](https://www.freecodecamp.org/news/how-to-write-a-good-readme-file/)
