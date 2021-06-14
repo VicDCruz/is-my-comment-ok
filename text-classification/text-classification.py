@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 
 # Initial data and methods
 
+debug = False
+
 
 def plotGraphs(history, metric):
     """
@@ -22,7 +24,8 @@ def waitUser():
     """
     Use the input keyboard method to wait user to continue
     """
-    input('Presiona enter para continuar')
+    if debug:
+        input('Presiona enter para continuar')
 
 
 dataset, info = tfds.load(
@@ -121,5 +124,7 @@ plotGraphs(history, 'loss')
 plt.ylim(0, None)
 
 sampleText = ('The movie was cool. The animation and the graphics '
-               'were out of this world. I would recommend this movie.')
+              'were out of this world. I would recommend this movie.')
 predictions = model.predict(np.array([sampleText]))
+
+model.save('classification-model.h5')
