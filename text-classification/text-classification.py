@@ -127,4 +127,4 @@ sampleText = ('The movie was cool. The animation and the graphics '
               'were out of this world. I would recommend this movie.')
 predictions = model.predict(np.array([sampleText]))
 
-model.save('classification-model.h5')
+model.save('classification-model', save_format='tf')
