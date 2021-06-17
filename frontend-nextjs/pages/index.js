@@ -1,8 +1,25 @@
+import React, { useState } from 'react';
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+  const [form, setForm] = useState({});
+  const [commentInfo, setCommentInfo] = useState({});
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+    const { comment } = form;
+    const res = await fetch('/api/predict?comment=' + comment);
+    const data = await res.json();
+    setCommentInfo(data);
+  }
+
+  const handleChange = event => {
+    setForm({...form, [event.target.name]: event.target.value});
+    if (Object.keys(commentInfo).length > 0) setCommentInfo({});
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -15,6 +32,16 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+
+        <form onSubmit={handleSubmit}>
+          <input name="comment" placeholder="Escribe tu comentario" onChange={handleChange}/>
+          <button type="submit">Enviar</button>
+        </form>
+        {Object.keys(commentInfo).length > 0 && (
+          <p className={styles.description}>
+            Este comentario es {commentInfo.result ? 'bueno' : 'malo'}. {commentInfo.acc.toFixed(3)}
+          </p>
+        )}
 
         <p className={styles.description}>
           Get started by editing{' '}
