@@ -128,5 +128,6 @@ plt.savefig('graphs.png')
 sampleText = ('The movie was cool. The animation and the graphics '
               'were out of this world. I would recommend this movie.')
 predictions = model.predict(np.array([sampleText]))
+print(predictions)
 
 # model.save('classification-model', save_format='tf')
