@@ -123,8 +123,10 @@ plt.subplot(1, 2, 2)
 plotGraphs(history, 'loss')
 plt.ylim(0, None)
 
+plt.savefig('graphs.png')
+
 sampleText = ('The movie was cool. The animation and the graphics '
               'were out of this world. I would recommend this movie.')
 predictions = model.predict(np.array([sampleText]))
 
-model.save('classification-model', save_format='tf')
+# model.save('classification-model', save_format='tf')
