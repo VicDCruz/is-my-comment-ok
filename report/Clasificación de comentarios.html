@@ -14259,7 +14259,7 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Víctor Daniel Cruz González</p>
+<h1 id="Clasificaci&#243;n-de-comentarios">Clasificaci&#243;n de comentarios<a class="anchor-link" href="#Clasificaci&#243;n-de-comentarios">&#182;</a></h1><p>Víctor Daniel Cruz González</p>
 
 </div>
 </div>
@@ -14271,11 +14271,573 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Contexto">Contexto<a class="anchor-link" href="#Contexto">&#182;</a></h2><p>Para este proyecto, requiero de tener una plataforma web capaz de indicar qué tan bueno o malo es un comentario, basándome en un modelo de Recurrent Neuronal Network que detallaré más adelante.</p>
+<p>Esta plataforma es un sitio de recetas en el que los usuarios pueden compartir videos y sus recetarios. Adicionalmente, otros pueden comentar cualquier cosa sobre esta. Sin embargo, se prohibe el uso de lenguaje ofensivo al momento de comentar. Por ende, la red neuronal sirve para detectar estos casos y permitir o no mandar el mensaje.</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="Antecedentes">Antecedentes<a class="anchor-link" href="#Antecedentes">&#182;</a></h1><h2 id="Recurrent-Neuronal-Network">Recurrent Neuronal Network<a class="anchor-link" href="#Recurrent-Neuronal-Network">&#182;</a></h2><p>Una red neuronal recurrente (RNN) es un tipo de red neuronal que utiliza datos secuenciales o series de tiempo. Estos algoritmos de aprendizaje profundo se utilizan para problemas temporales, como la traducción de idiomas, el procesamiento del lenguaje natural (nlp) o el reconocimiento de voz.</p>
+<p><img src="unrolled-network.png" alt="Unrolled network"></p>
 <p>Mientras que las redes neuronales profundas asumen que las entradas y salidas son independientes entre sí, la salida de las recurrentes depende de los elementos anteriores. Asimismo, comparten parámetros en cada capa de la red. Las redes neuronales recurrentes comparten el mismo parámetro de peso dentro de cada capa de la red. Estos pesos todavía se ajustan en los procesos de retropropagación y descenso de gradiente para facilitar el aprendizaje por refuerzo.</p>
-<p>Las redes neuronales recurrentes aprovechan el algoritmo de retropropagación a través del tiempo (BPTT) para determinar los gradientes, que es ligeramente diferente de la retropropagación tradicional, ya que es específico de los datos de secuencia. Este algoritmo implica que el modelo se entrena a sí mismo calculando errores desde su capa de salida hasta su capa de entrada. Estos cálculos nos permiten ajustar los parámetros del modelo de manera adecuada. BPTT se diferencia del enfoque tradicional en que BPTT suma los errores en cada paso de tiempo, mientras que las redes de retroalimentación no necesitan sumar errores, ya que no comparten parámetros en cada capa.</p>
+<p>Las redes neuronales recurrentes aprovechan el algoritmo de retropropagación a través del tiempo (BPTT) para determinar los gradientes, pues es específico de los datos de secuencia. Este algoritmo implica que el modelo se entrena a sí mismo calculando errores desde su capa de salida hasta su capa de entrada. Estos cálculos nos permiten ajustar los parámetros del modelo. BPTT se diferencia del enfoque tradicional en que BPTT suma los errores en cada paso de tiempo, mientras que las redes de retroalimentación no necesitan sumar errores, ya que no comparten parámetros en cada capa.</p>
 <p><img src="bptt.svg" alt="BPPT"></p>
-<p>A través de este proceso, los RNN tienden a encontrarse con dos problemas, conocidos como gradientes explosivos y gradientes que desaparecen. Estos problemas se definen por el tamaño del gradiente, que es la pendiente de la función de pérdida a lo largo de la curva de error. Cuando el gradiente es demasiado pequeño, continúa haciéndolo más pequeño, actualizando los parámetros de peso hasta que se vuelven insignificantes, es decir. 0. Cuando eso ocurre, el algoritmo ya no está aprendiendo. Los degradados explosivos se producen cuando el degradado es demasiado grande, creando un modelo inestable. En este caso, los pesos del modelo crecerán demasiado y, finalmente, se representarán como NaN. Una solución a estos problemas es reducir la cantidad de capas ocultas dentro de la red neuronal, eliminando parte de la complejidad del modelo RNN.</p>
+<p>A través de este proceso, los RNN tienen dos retos, conocidos como gradientes explosivos y gradientes que desaparecen. Estos problemas se definen por el tamaño del gradiente. Cuando el gradiente es demasiado pequeño, continúa haciéndolo más pequeño, actualizando los parámetros de peso hasta que se vuelven 0. Cuando eso ocurre, el algoritmo ya no está aprendiendo. Los gradientes explosivos se producen cuando el xambio de valor es demasiado grande, creando un modelo inestable. En este caso, los pesos del modelo crecerán demasiado, hasta números que sobrepasan las librerías de las computadoras. Una solución a estos problemas es reducir la cantidad de capas ocultas dentro de la red neuronal, eliminando parte de la complejidad del modelo RNN.</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Arquitectura">Arquitectura<a class="anchor-link" href="#Arquitectura">&#182;</a></h2><p>Dado que es una plataforma web, en este projecto use Node.js y Python para establecer la comunicación y la RNN. Específicamente, Tensorflow ayudo a esto y Flask a establecer comunicación entre Node.js y el modelo. Para hacerlo en un ambiente controlado, elegí Docker y Docker Compose.</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="Implementaci&#243;n">Implementaci&#243;n<a class="anchor-link" href="#Implementaci&#243;n">&#182;</a></h1>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Inicializando librerias.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plotGraphs</span><span class="p">(</span><span class="n">history</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Display graph of history and metric</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="n">metric</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;val_&#39;</span> <span class="o">+</span> <span class="n">metric</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epochs&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="n">metric</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span> <span class="o">+</span> <span class="n">metric</span><span class="p">])</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Obteniendo dataset de IMDB</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dataset</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+    <span class="s1">&#39;imdb_reviews&#39;</span><span class="p">,</span> <span class="n">with_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_supervised</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">trainDataset</span><span class="p">,</span> <span class="n">testDataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">],</span> <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">trainDataset</span><span class="o">.</span><span class="n">element_spec</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>(TensorSpec(shape=(), dtype=tf.string, name=None), TensorSpec(shape=(), dtype=tf.int64, name=None))
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Generando ejemplo</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">example</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">trainDataset</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;text: &#39;</span><span class="p">,</span> <span class="n">example</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;label: &#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>text:  b&#34;This was an absolutely terrible movie. Don&#39;t be lured in by Christopher Walken or Michael Ironside. Both are great actors, but this must simply be their worst role in history. Even their great acting could not redeem this movie&#39;s ridiculous storyline. This movie is an early nineties US propaganda piece. The most pathetic scenes were those when the Columbian rebels were making their cases for revolutions. Maria Conchita Alonso appeared phony, and her pseudo-love affair with Walken was nothing but a pathetic emotional plug in a movie that was devoid of any real meaning. I am disappointed that there are movies like this, ruining actor&#39;s like Christopher Walken&#39;s good name. I could barely sit through it.&#34;
+label:  0
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Mezclando los datos</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">BUFFER_SIZE</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">64</span>
+
+<span class="n">trainDataset</span> <span class="o">=</span> <span class="n">trainDataset</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">BUFFER_SIZE</span><span class="p">)</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span>
+    <span class="n">BATCH_SIZE</span><span class="p">)</span><span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">AUTOTUNE</span><span class="p">)</span>
+<span class="n">testDataset</span> <span class="o">=</span> <span class="n">testDataset</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)</span><span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">AUTOTUNE</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">example</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">trainDataset</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;texts: &#39;</span><span class="p">,</span> <span class="n">example</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[:</span><span class="mi">3</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;labels: &#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[:</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>texts:  [b&#39;had some lovely poetic bits but is really just an artsy-fartsy toss-together with no direction or resolution. how do these people get through film school? who gives them money to make this crap? could have been so much more, fine lead actor, and i always like Fairuza Balk, but come on, the alt-rock metaphor of just staring vacantly unable to find anything compelling is just so tired, and it sure doesn\&#39;t make for good films. the director needs to go away and live life for a good long while and not come back to the camera until they really have something to say. this is like the throw-spaghetti-at-the-wall school of art-making, just juxtapose a bunch of earnest imagery and hope hope hope like hell that poetry emerges. that can work, if the director actually has any kind of vision, or has a brain that knows when it\&#39;s in the presence of potential, but here it\&#39;s just space filler, of no consequence. i felt the lazy ending coming moments before it hit, and was yelling &#34;you lazy bastard&#34; at the screen when the credits popped up.&#39;
+ b&#39;What a horrible comedy. Totally lame. The supposed &#34;humor&#34; was simple and stupid. Stanly Tucci (a great actor) had the only parts worth chuckling at. And he was tied up and gagged at the time. Don\&#39;t waste your time with this one. It deserves a 0/10.&#39;
+ b&#39;Written by a woman, and directed by another. Whoppie. Are we in for a feminist ride or what. Fasten your seat-belts, ladies, for we are about to enter a world of mean men and innocent, well-intentioned women.&lt;br /&gt;&lt;br /&gt;In this soaper Trish comes across a guy in the employment agency who behaves, looks, and dresses like a pimp(!) and gives her a job with the hope of nailing her some time later. In his office he even touches her chin the way a megalomaniacal heavy in a Bond movie would a touch a girl just after he\&#39;s captured her and just before he is ready to kill her alongside with Bond. Some time later the pimp/employment guy stalks Trish in a ladies\&#39; dressing-room, harasses her, and even comes close to raping her. Oh, these evil, evil men. They are ALL bad, don\&#39;t you know. You can\&#39;t even look for a job nowadays without getting raped, right ladies? Well, we\&#39;ll show \&#39;em! In this film there is some kind of a divorced women\&#39;s club or something, headed by a Janet Leigh who speaks for all women involved in this film when she says that &#34;men are all s**t&#34;. She moans about how terrible men are; she has been divorced five times. Now, seriously: any woman who marries twenty times and then uses that statistic as an argument that men are all &#34;bad&#34; must have realized eventually that the explanation might lie elsewhere, or? It must occur to her that: a) she is a bad judge of male character, or - much more likely - b) SHE is the one impossible to live with - her ex-husbands were probably the victims, or if they were indeed a**holes then she probably got what she deserved. (Don\&#39;t the likes of Zsa-Zsa Gabor and Liz Taylor prove this point? Show me a likable woman who got married this often and I\&#39;ll show you a way to reach the planet Mars using only roller-skates and a ladder.) Trish eventually meets a computer guy who restores her faith in men - but hold your horses; this guy turns out to be married, therefore proving WITHOUT a doubt that men are indeed all &#34;bad&#34;. Were it not, of course, for a kindly old vegetable seller around the corner who loves his wife even though she\&#39;s still dead - proving that all men are &#34;bad&#34; except for kindly old men whose penises don\&#39;t work and they &#34;can\&#39;t get none&#34; anyway so they are forced to abandon a life of a**holocolism and finally give women the respect they deserve. Even the supporting male characters are all &#34;bad&#34;; the black guy in the employment agency is unfriendly, and the guy in the mortuary is out-right rude - and insensitive (the bastard, *sob*...*sniffle*\xc2\x85) And what\&#39;s with this corny, corny ending?... Minutes before court-time Trish abandons the claim to any of her husband\&#39;s money, realizing that she is now &#34;free&#34; and that she can finally do that jump into the swimming pool...?? What\&#39;s all that about?? Her jump into the pool is then - very predictably - frame-frozen as the credits start to role in, while life-inspiring I-don\&#39;t-need-revenge-nor-my-husband\&#39;s-money music starts kicking in. Her girlfriends are shocked by her abandonment of money claims, but they don\&#39;t stay shocked for long and soon start kidding each other about what a heart-attack Trish\&#39;s lawyer will get when he hears about this. The shyster lawyer is naturally a man. An evil, evil, terrible &#34;bad&#34; man, whose only interest in this world is money... Ah, these men; all they care about is money; they know nothing of the higher values in life - like shopping. I am glad we have movies like this; they bring the sexes closer together, but most importantly, they teach girls and young women that men are all horny, selfish, skirt-chasing bastards who will dump you into a world of poverty and misery the first chance they get. So, girls, open your mouths an stick your tongues into your girlfriend\&#39;s mouths. Lesbian power!&#39;]
+
+labels:  [0 0 0]
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Creando text encoder</p>
+<p>Esto implica que el TextVectorization cambia y etique las palabras para que después sean usadas para el modelo. Hay que notar que los UNK se generan cuando el tamaño limitado del vocabulario y hay una falta de backup sobre los caracteres.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">VOCAB_SIZE</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">TextVectorization</span><span class="p">(</span>
+    <span class="n">max_tokens</span><span class="o">=</span><span class="n">VOCAB_SIZE</span><span class="p">)</span>
+<span class="n">encoder</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">trainDataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">text</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="n">text</span><span class="p">))</span>
+<span class="n">vocab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">encoder</span><span class="o">.</span><span class="n">get_vocabulary</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vocab</span><span class="p">[:</span><span class="mi">20</span><span class="p">])</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>[&#39;&#39; &#39;[UNK]&#39; &#39;the&#39; &#39;and&#39; &#39;a&#39; &#39;of&#39; &#39;to&#39; &#39;is&#39; &#39;in&#39; &#39;it&#39; &#39;i&#39; &#39;this&#39; &#39;that&#39;
+ &#39;br&#39; &#39;was&#39; &#39;as&#39; &#39;for&#39; &#39;with&#39; &#39;movie&#39; &#39;but&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Mostrando ejemplos del encoder</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">example</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">trainDataset</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">encodedExample</span> <span class="o">=</span> <span class="n">encoder</span><span class="p">(</span><span class="n">example</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">encodedExample</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">example</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">trainDataset</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">encodedExample</span> <span class="o">=</span> <span class="n">encoder</span><span class="p">(</span><span class="n">example</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Original: &#39;</span><span class="p">,</span> <span class="n">example</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Round-trip: &#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">vocab</span><span class="p">[</span><span class="n">encodedExample</span><span class="p">[</span><span class="n">n</span><span class="p">]]))</span>
+        <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>[[  1  11 729 ...   0   0   0]
+ [297   1  88 ...   0   0   0]
+ [  1  14   4 ...   0   0   0]]
+Original:  b&#39;Everyone is either loving or hating this film. I am going with loving. It is so well shot and so well acted. Beautiful. This film is for people who appreciate well crafted film making. If you are not a fan of well done films of course you would hate this. But if you like the tops of acting, photography, story and development, look no further then here.&#39;
+Round-trip:  everyone is either [UNK] or [UNK] this film i am going with [UNK] it is so well shot and so well [UNK] beautiful this film is for people who [UNK] well [UNK] film making if you are not a fan of well done films of course you would hate this but if you like the [UNK] of acting [UNK] story and development look no [UNK] then here                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+
+Original:  b&#34;0.5/10. This movie has absolutely nothing good about it. The acting is among the worst I have ever seen, what is really amazing is that EVERYONE is awful, not just a few here and there, everyone. The direction is a joke, the low budget is hopelessly evident, the score is awful, I wouldn&#39;t say the movie was edited, brutally chopped would be a more appropriate phrase. It combines serial killings, voodoo and tarot cards. Dumb. Dumb. Dumb. It is not scary at all, the special effects are hopelessly lame. laughably bad throughout. The writing was appallingly bad. The cinematography is real cheap looking, and very grainy sometimes, and the camera-work is dreadful. Again, what really does the movie in is how badly all the actors are. Cheesy.&#34;
+Round-trip:  [UNK] this movie has absolutely nothing good about it the acting is among the worst i have ever seen what is really amazing is that everyone is awful not just a few here and there everyone the direction is a joke the low budget is [UNK] [UNK] the score is awful i wouldnt say the movie was [UNK] [UNK] [UNK] would be a more [UNK] [UNK] it [UNK] [UNK] [UNK] [UNK] and [UNK] [UNK] dumb dumb dumb it is not scary at all the special effects are [UNK] lame [UNK] bad throughout the writing was [UNK] bad the cinematography is real cheap looking and very [UNK] sometimes and the [UNK] is [UNK] again what really does the movie in is how badly all the actors are cheesy                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+
+Original:  b&#39;This film concerns a very young girl, Cassie, (Melissa Sagemiller) who leaves her family and heads off to become a college freshman. One night Cassie and her friends decide to go to a wild party with plenty of drinking and dancing and Cassie is riding with her boyfriend who she likes but never told him she loved him. As Cassie was driving, a car was stopped in the middle of the road and she was unable to avoid an accident and as a result there is a bloody loss of lives along with her boyfriend. Cassie becomes very emotionally upset and has nightmares which cause her to have hallucinations about her boyfriend coming back to life and encounters men trying to murder her and she is struggling to find out who her real friends are, who wants her dead and will she survive this entire horror ordeal. Cassie dreams she is being made love to by her boyfriend after he died and finds another guy in her bed and is told she was asking him to make love. This is a way out film, and not very good at all.&#39;
+Round-trip:  this film [UNK] a very young girl [UNK] [UNK] [UNK] who leaves her family and [UNK] off to become a [UNK] [UNK] one night [UNK] and her friends [UNK] to go to a [UNK] [UNK] with plenty of [UNK] and [UNK] and [UNK] is [UNK] with her [UNK] who she [UNK] but never told him she loved him as [UNK] was [UNK] a car was [UNK] in the middle of the [UNK] and she was [UNK] to avoid an [UNK] and as a result there is a [UNK] [UNK] of lives along with her [UNK] [UNK] becomes very [UNK] [UNK] and has [UNK] which [UNK] her to have [UNK] about her [UNK] coming back to life and [UNK] men trying to murder her and she is [UNK] to find out who her real friends are who wants her dead and will she [UNK] this entire horror [UNK] [UNK] [UNK] she is being made love to by her [UNK] after he [UNK] and finds another guy in her [UNK] and is told she was [UNK] him to make love this is a way out film and not very good at all                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Implementando arquitectura para RNN</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">encoder</span><span class="p">,</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span>
+        <span class="n">input_dim</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">encoder</span><span class="o">.</span><span class="n">get_vocabulary</span><span class="p">()),</span>
+        <span class="n">output_dim</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+        <span class="n">mask_zero</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">),</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Bidirectional</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">64</span><span class="p">)),</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">([</span><span class="n">layer</span><span class="o">.</span><span class="n">supports_masking</span> <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">layers</span><span class="p">])</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>[False, True, True, True, True]
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Viendo si funciona la solución</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Texto sin padding</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sampleText</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;The movie was cool. The animation and the graphics &#39;</span>
+              <span class="s1">&#39;were out of this world. I would recommend this movie.&#39;</span><span class="p">)</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">sampleText</span><span class="p">]))</span>
+<span class="n">predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>array([-0.00460901], dtype=float32)</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Texto con padding</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">padding</span> <span class="o">=</span> <span class="s2">&quot;the &quot;</span> <span class="o">*</span> <span class="mi">2000</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">sampleText</span><span class="p">,</span> <span class="n">padding</span><span class="p">]))</span>
+<span class="n">predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>array([-0.00460901], dtype=float32)</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Compilando la solución</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">BinaryCrossentropy</span><span class="p">(</span><span class="n">from_logits</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+              <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">),</span>
+              <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span>
+              <span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Entrenando modelo</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">trainDataset</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                    <span class="n">validation_data</span><span class="o">=</span><span class="n">testDataset</span><span class="p">,</span> <span class="n">validation_steps</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+
+<span class="n">testLoss</span><span class="p">,</span> <span class="n">testAcc</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">testDataset</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Test Loss: &#39;</span><span class="p">,</span> <span class="n">testLoss</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Test Accuracy: &#39;</span><span class="p">,</span> <span class="n">testAcc</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="Resultados">Resultados<a class="anchor-link" href="#Resultados">&#182;</a></h1>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plotGraphs</span><span class="p">(</span><span class="n">history</span><span class="p">,</span> <span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plotGraphs</span><span class="p">(</span><span class="n">history</span><span class="p">,</span> <span class="s1">&#39;loss&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><img src="graphs.png" alt=""></p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Una de las ventajas de usar Tensorflow es exportar este modelo para no cargar nuevamente el entrenamiento y gastar tiempo. Así, para poder usarlo existen varias formas, pero dado que mi objetivo es usarlo en una plataforma web, utilice Flask. Este framework de python permite hacer una comunicación TCP/IP de forma fácil y sencilla. Cree una directiva para que Flask obtuviera el texto a analizar y el modelo se encarga de predicir qué tan bueno o malo es, como si lo estuviera usando en local.</p>
+
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>De esta forma, la implementación para el módulo de comentarios queda de la siguiente forma.</p>
+<p><img src="Home.jpg" alt="Home"></p>
+<p>Después de escribir texto, sale el siguiente resultado.</p>
+<p><img src="Comment.jpg" alt="Comment"></p>
 
 </div>
 </div>
